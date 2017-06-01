@@ -17,8 +17,8 @@ $title = $_REQUEST['title'];
 $description = $_REQUEST['description'];
 $git = $_REQUEST['git'];
 $subdomain = $_REQUEST['subdomain'];
-$approve_code = md5($_REQUEST['email_user']);//+ microtime();
-$reject_code = md5($_REQUEST['email_user']);//+ time();
+$approve_code = md5($_REQUEST['project_id'])+ microtime();
+$reject_code = md5($_REQUEST['project_id'])+ time();
 	if (isset($_POST['use_mysql'])){
         $use_mysql=1;
     } else {
@@ -50,19 +50,26 @@ $res =  "INSERT INTO project (name, `group`, curator_id, title, description, git
 		echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
    
     } ;
-	 $approve_code=mysql_query("SELECT approve_code FROM project where git=$git and status_progect=0");
-while ($result2 = mysql_fetch_array($approve_code))  
-	$activation=$result2['approve_code'];
+	
 
 	
 	$reject_code=mysql_query("SELECT reject_code FROM project where git=$git");
 while ($result3 = mysql_fetch_array($reject_code))  
 	$deactivation=$result3['reject_code'];
-    
+var_dump($deactivation);
+
+  $approve_code=mysql_query("SELECT approve_code FROM project where git=$git and status_progect=0");
+while ($result2 = mysql_fetch_array($approve_code))  
+	$activation=$result2['approve_code'];
+var_dump($activation);
+
+
+
+//$url = "http://nsuem.ru/activate.php?approve_code=rawurlencode($activation)";
 $url = "http://nsuem.ru/activate.php?approve_code=$activation";
-//var_dump($url);
-$url2 = "http://nsuem.ru/activate.php?approve_code=$deactivation";	
-//var_dump($url2);
+var_dump($url);
+$url2 = "http://nsuem.ru/activate.php?reject_code=$deactivation";	
+var_dump($url2);
 
 	
  $email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.curator_id=$curator");
@@ -71,9 +78,9 @@ while ($result = mysql_fetch_array($email_curator))
 
 
 {
- $to = $result['email_curator'];	
- $subject = "Заявка на публикацию проекта";
- $message = '<html xmlns="http://www.w3.org/1999/xhtml">
+	$subject = "Заявка на публикацию проекта";   
+	$to = $result['email_curator'];	
+	$message = '<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width"/>
@@ -127,7 +134,7 @@ while ($result = mysql_fetch_array($email_curator))
 				td[id="bodyCell"]{padding-top:10px !important; padding-Right:10px !important; padding-Left:10px !important;}
 			}
 		</style>
-           </head>
+    </head>
     <body>
     	<center>
         	<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
@@ -191,8 +198,8 @@ while ($result = mysql_fetch_array($email_curator))
                                                                     <td valign="top" class="textContent">
                                                                         <h3>Для подтверждения пройдите по ссылке:</h3>
                                                                         <br />
-																		
-                                                               .$url                                                                   </td>
+																		"http://nsuem.ru/activate.php?approve_code='+$activation+'"
+												                    </td>
                                                                 </tr>
                                                             </table>
                                                      
@@ -202,7 +209,7 @@ while ($result = mysql_fetch_array($email_curator))
                                                                         <h3>Для отказа пройтиде по ссылке:
 																		</h3>
                                                                         <br />
-                                                                    <span><?php echo $url2; ?></span>
+                                                                    <?= $url2 ?>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -248,7 +255,6 @@ while ($result = mysql_fetch_array($email_curator))
 ;
 $headers= "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-//$from = "liskaaliska@gmail.com";
 $subject = "=?utf-8B?B?" .base64_encode($subject)."?=";
 mail ($to, $subject, $message, $headers);
 
