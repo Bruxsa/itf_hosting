@@ -1,4 +1,4 @@
-	itf_hosting /generation.php
+
 <?
 	//генерирую строку для approve_code из 8 симвполов
 function approve_code($length = 8){
