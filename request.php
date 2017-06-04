@@ -106,9 +106,9 @@
   <label class="col-md-4 control-label" for="checkboxes">Нужен MySQL</label>
   <div class="col-md-4">
   <div class="checkbox">
-    <label for="checkboxes-1">
-      <input type="checkbox" name="use_MySQL" id="checkboxes-1" value="1">
-      
+    <label for="checkboxes-0">
+      <input type="checkbox" name="use_mysql" id="checkboxes-0" value="1">
+     
     </label>
 	</div>
   </div>
@@ -118,8 +118,8 @@
   <label class="col-md-4 control-label" for="checkboxes">Нужен Composer</label>
   <div class="col-md-4">
   <div class="checkbox">
-    <label for="checkboxes-0">
-      <input type="checkbox" name="use_composer" id="checkboxes-0" value="1">
+    <label for="checkboxes-1">
+      <input type="checkbox" name="use_composer" id="checkboxes-1" value="1">
      
     </label>
 	</div>
@@ -131,7 +131,7 @@
   <div class="col-md-4">
   <div class="checkbox">
     <label for="checkboxes-2">
-      <input type="checkbox" name="use_NPM" id="checkboxes-2" value="1">
+      <input type="checkbox" name="use_npm" id="checkboxes-2" value="1">
      
     </label>
 	</div>

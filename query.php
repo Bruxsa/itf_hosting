@@ -19,13 +19,14 @@ $git = $_REQUEST['git'];
 $subdomain = $_REQUEST['subdomain'];
 $approve_code = md5($_REQUEST['project_id'])+ microtime();
 $reject_code = md5($_REQUEST['project_id'])+ time();
+
 	if (isset($_POST['use_mysql'])){
-        $use_mysql=1;
+		$use_mysql=1;
     } else {
         $use_mysql=0;
     }
     if (isset($_POST['use_composer'])){
-      $use_composer=1;
+        $use_composer=1;
     } else {
         $use_composer=0;
     }         
@@ -51,31 +52,12 @@ $res =  "INSERT INTO project (name, `group`, curator_id, title, description, git
    
     } ;
 	
+$url = "http://nsuem.ru/activate.php?approve_code=$approve_code";
+$url2 = "http://nsuem.ru/activate.php?reject_code=$reject_code";	
 
-	
-	$reject_code=mysql_query("SELECT reject_code FROM project where git=$git");
-while ($result3 = mysql_fetch_array($reject_code))  
-	$deactivation=$result3['reject_code'];
-var_dump($deactivation);
-
-  $approve_code=mysql_query("SELECT approve_code FROM project where git=$git and status_progect=0");
-while ($result2 = mysql_fetch_array($approve_code))  
-	$activation=$result2['approve_code'];
-var_dump($activation);
-
-
-
-//$url = "http://nsuem.ru/activate.php?approve_code=rawurlencode($activation)";
-$url = "http://nsuem.ru/activate.php?approve_code=$activation";
-var_dump($url);
-$url2 = "http://nsuem.ru/activate.php?reject_code=$deactivation";	
-var_dump($url2);
-
-	
  $email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.curator_id=$curator");
 while ($result = mysql_fetch_array($email_curator)) 
        //var_dump($result['email_curator']);
-
 
 {
 	$subject = "Заявка на публикацию проекта";   
@@ -161,7 +143,9 @@ while ($result = mysql_fetch_array($email_curator))
                                                                     <td valign="top" class="textContent">
                                                                         <h3>Подтверждение публикации проекта</h3>
                                                                         <br />
-                                                                      Вы были указаны в качестве куратора при регистрации проекта на веб-хостинге ИТФ, пожалуйста, подтвердите или запретите публикацию проекта. 
+																		Пользователь ' . $_POST['name'] . ' отправил вам заявку на публикацию проекта: "' . $_POST['title'] . '"<br /><br />
+																		Файлы находятся по адресу: ' . $_POST['git'] . '<br /><br />	
+                                                                       Связяться с ним можно по email <a href="mailto:' . $_POST['email_user'] . '">' . $_POST['email_user'] . '
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -197,9 +181,8 @@ while ($result = mysql_fetch_array($email_curator))
                                                                 <tr>
                                                                     <td valign="top" class="textContent">
                                                                         <h3>Для подтверждения пройдите по ссылке:</h3>
-                                                                        <br />
-																		"http://nsuem.ru/activate.php?approve_code='+$activation+'"
-												                    </td>
+                                                                        <br />'.$url.
+												                    '</td>
                                                                 </tr>
                                                             </table>
                                                      
@@ -208,9 +191,9 @@ while ($result = mysql_fetch_array($email_curator))
                                                                     <td valign="top" class="textContentLast">
                                                                         <h3>Для отказа пройтиде по ссылке:
 																		</h3>
-                                                                        <br />
-                                                                    <?= $url2 ?>
-                                                                    </td>
+                                                                        <br />'
+                                                                     .$url2.
+                                                                   ' </td>
                                                                 </tr>
                                                             </table>
                                                          
