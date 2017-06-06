@@ -7,59 +7,59 @@
 	<body>
 <? 
  
-// mysql_query выполняет запрос к БД, написанный на языке SQL.
-mysql_query('SET NAMES UTF8'); 
-$name = $_REQUEST['name'];
-$group = $_REQUEST['group'];
-$email_user = $_REQUEST['email_user'];
-$curator = $_REQUEST['curator'];
-$title = $_REQUEST['title'];
-$description = $_REQUEST['description'];
-$git = $_REQUEST['git'];
-$subdomain = $_REQUEST['subdomain'];
-$approve_code = md5($_REQUEST['project_id'])+ microtime();
-$reject_code = md5($_REQUEST['project_id'])+ time();
+	// mysql_query выполняет запрос к БД, написанный на языке SQL.
+	mysql_query('SET NAMES UTF8'); 
+	$name = $_REQUEST['name'];
+	$group = $_REQUEST['group'];
+	$email_user = $_REQUEST['email_user'];
+	$curator = $_REQUEST['curator'];
+	$title = $_REQUEST['title'];
+	$description = $_REQUEST['description'];
+	$git = $_REQUEST['git'];
+	$subdomain = $_REQUEST['subdomain'];
+	$approve_code = md5($_REQUEST['project_id'])+ microtime();
+	$reject_code = md5($_REQUEST['project_id'])+ time();
 
-	if (isset($_POST['use_mysql'])){
-		$use_mysql=1;
-    } else {
-        $use_mysql=0;
-    }
-    if (isset($_POST['use_composer'])){
-        $use_composer=1;
-    } else {
-        $use_composer=0;
-    }         
-	if (isset($_POST['use_npm'])){
-        $use_npm=1;
-    } else {
-        $use_npm=0;} 
+		if (isset($_POST['use_mysql'])){
+			$use_mysql=1;
+		} else {
+			$use_mysql=0;
+		}
+		if (isset($_POST['use_composer'])){
+			$use_composer=1;
+		} else {
+			$use_composer=0;
+		}         
+		if (isset($_POST['use_npm'])){
+			$use_npm=1;
+		} else {
+			$use_npm=0;} 
 		
-$res2 = "INSERT INTO user (email_user)" .  
-	"VALUES('{$email_user}')"; 
-	mysql_query($res2);
-	
-$res =  "INSERT INTO project (name, `group`, curator_id, title, description, git, subdomain, use_mysql, use_composer,use_npm, approve_code,reject_code)" .  
+	$res2 = "INSERT INTO user (email_user)" .  
+		"VALUES('{$email_user}')"; 
+		mysql_query($res2);
+		
+	$res =  "INSERT INTO project (name, `group`, curator_id, title, description, git, subdomain, use_mysql, use_composer,use_npm, approve_code,reject_code)" .  
 	"VALUES('{$name}', '{$group}' , '{$curator}' , '{$title}' , '{$description}' , '{$git}','{$subdomain}','{$use_mysql}','{$use_composer}','{$use_npm}','{$approve_code}','{$reject_code}')"; 
 
     mysql_query($res);
     echo mysql_error();
-   if ($res = 'true'){
+		if ($res = 'true'){
 		echo "<script type=\"text/javascript\">alert( \"Спасибо, за оставленную заявку! Она передана на рассмотрение куратором\");</script> \n";
       
-    }else{
-		echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
+		}else	{
+			echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
    
-    } ;
+				} ;
 	
-$url = "http://nsuem.ru/activate.php?approve_code=$approve_code";
-$url2 = "http://nsuem.ru/activate.php?reject_code=$reject_code";	
+	$url  = "http://localhost/test/activate.php?approve_code=$approve_code";
+	$url2 = "http://localhost/test/deactivate.php?reject_code=$reject_code";	
 
- $email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.curator_id=$curator");
-while ($result = mysql_fetch_array($email_curator)) 
-       //var_dump($result['email_curator']);
+	$email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.curator_id=$curator");
+	while ($result = mysql_fetch_array($email_curator)) 
+	//var_dump($result['email_curator']);
 
-{
+	{
 	$subject = "Заявка на публикацию проекта";   
 	$to = $result['email_curator'];	
 	$message = '<html xmlns="http://www.w3.org/1999/xhtml">
@@ -145,7 +145,8 @@ while ($result = mysql_fetch_array($email_curator))
                                                                         <br />
 																		Пользователь ' . $_POST['name'] . ' отправил вам заявку на публикацию проекта: "' . $_POST['title'] . '"<br /><br />
 																		Файлы находятся по адресу: ' . $_POST['git'] . '<br /><br />	
-                                                                       Связяться с ним можно по email <a href="mailto:' . $_POST['email_user'] . '">' . $_POST['email_user'] . '
+                                                                       Связяться с автором можно по email: 
+																	   <a href="mailto:' . $_POST['email_user'] . '">' . $_POST['email_user'] . '
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -234,14 +235,14 @@ while ($result = mysql_fetch_array($email_curator))
             </table>
         </center>
     </body>
-</html>'
-;
-$headers= "MIME-Version: 1.0\r\n";
-$headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$subject = "=?utf-8B?B?" .base64_encode($subject)."?=";
-mail ($to, $subject, $message, $headers);
+</html>';
+	$headers= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-type: text/html; charset=UTF-8\r\n";
+	$subject = "=?utf-8B?B?" .base64_encode($subject)."?=";
+	mail ($to, $subject, $message, $headers);
 
- }
+	}
+	
 ?>
-</body>
+	</body>
 </html>
