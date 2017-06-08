@@ -17,7 +17,7 @@ USE `host`;
 
 -- Дамп структуры для таблица host.curator
 CREATE TABLE IF NOT EXISTS `curator` (
-  `curator_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name_curator` varchar(50) DEFAULT NULL,
   `status` tinyint(4) DEFAULT '1',
   `email_curator` varchar(50) DEFAULT NULL,
@@ -29,10 +29,12 @@ CREATE TABLE IF NOT EXISTS `curator` (
 
 -- Дамп структуры для таблица host.database
 CREATE TABLE IF NOT EXISTS `database` (
-  `database_id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project` int(11) DEFAULT NULL,
   `name_database` varchar(50) DEFAULT NULL,
+  `user_database` varchar(45) DEFAULT NULL,
   `password_database` varchar(50) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
   PRIMARY KEY (`database_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `database` (
 
 -- Дамп структуры для таблица host.project
 CREATE TABLE IF NOT EXISTS `project` (
-  `project_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `group` varchar(50) DEFAULT NULL,
-  `curator_id` int(11) DEFAULT NULL,
+  `curator` int(11) DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
   `description` text,
   `git` varchar(50) DEFAULT NULL,
@@ -59,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `use_mysql` tinyint(1) DEFAULT '0',
   `use_composer` tinyint(1) DEFAULT '0',
   `use_npm` tinyint(1) DEFAULT '0',
-  `user_id` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL,
   `projectcol` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -69,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `project` (
 
 -- Дамп структуры для таблица host.release
 CREATE TABLE IF NOT EXISTS `release` (
-  `release_id` int(11) NOT NULL AUTO_INCREMENT,
-  `project_id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project` int(11) DEFAULT NULL,
   `date_time` datetime DEFAULT NULL,
   `release_type` tinyint(2) DEFAULT '0',
   `log` varchar(150) DEFAULT NULL,
@@ -82,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `release` (
 
 -- Дамп структуры для таблица host.user
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email_user` varchar(50) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `password_hash` varchar(50) DEFAULT NULL,
