@@ -1,12 +1,10 @@
 <? 
-//получение данных из таблицы и установление соединения с бд
-$db = "host"; 
-//Хостинг 
-$host = "localhost"; 
-//Логин и пароль пользователя 
-$user = "root"; 
-$pass = ""; 
-$connect = mysql_connect($host, $user, $pass); 
-mysql_select_db($db); 
+
+$mysqli = new mysqli('localhost','root','','host2');
+$mysqli->set_charset('utf8');
+if ($mysqli->connect_error) {
+  echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+}
 
 ?>
+

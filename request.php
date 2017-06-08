@@ -50,10 +50,11 @@
 								<div class="col-md-4">
 									<select id="curator" name="curator"  size="1" class="form-control">
 										<?
-											$res = mysql_query('select `name_curator`, `id` from `curator` WHERE status=1');
-											while($row = mysql_fetch_assoc($res)){
+											$res = $mysqli->query("select `name_curator`, `id` from `curator` WHERE status=1");
+											while($row =$res-> fetch_assoc()){
 										?>
 										<option value="<?=$row['id']?>"><?=$row['name_curator']?></option>
+							
 											<?
 												}
 											?>
