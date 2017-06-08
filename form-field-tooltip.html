@@ -1,0 +1,50 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+	<title>Form field tooltip</title>
+	<style type="text/css">
+	body{
+		background-color:#EEE;
+		font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+	}
+	fieldset{
+		width:720px;
+	}
+	</style>
+	<link rel="stylesheet" href="css/form-field-tooltip.css" media="screen" type="text/css">
+	<script type="text/javascript" src="js/rounded-corners.js"></script>
+	<script type="text/javascript" src="js/form-field-tooltip.js"></script>
+	
+</head>
+<body>
+<div id="mainContainer">
+	<fieldset>
+		<legend></legend>
+	</fieldset>
+	<fieldset>
+		
+		<table>
+		  <tr>
+				<td><label for="subdomain">Domain</label></td>
+				<td><input type="text" id="subdomain" name="subdomain" tooltipText="Если данное поле пустое, domain назначается автоматически"></td>
+			</tr>
+			<tr>
+				<td><label for="description">Описание проекта</label></td>
+				<td><input type="text" id="description" name="description" tooltipText="Опишите в чем заключается суть проекта"></td>
+			</tr>
+			
+		</table>		
+	</fieldset>
+
+</div>
+
+<script type="text/javascript">
+var tooltipObj = new DHTMLgoodies_formTooltip();
+tooltipObj.setTooltipPosition('right');
+tooltipObj.setPageBgColor('#EEEEEE');
+tooltipObj.setTooltipCornerSize(15);
+tooltipObj.initFormFieldTooltip();
+</script>
+</body>
+</html>

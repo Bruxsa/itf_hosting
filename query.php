@@ -17,30 +17,21 @@
 	$description = $_REQUEST['description'];
 	$git = $_REQUEST['git'];
 	$subdomain = $_REQUEST['subdomain'];
-	$approve_code = md5($_REQUEST['project_id'])+ microtime();
-	$reject_code = md5($_REQUEST['project_id'])+ time();
+	$approve_code = md5('a'.$_REQUEST['id'].time());
+	$reject_code = md5($_REQUEST['id'].time());
 
 		if (isset($_POST['use_mysql'])){
 			$use_mysql=1;
 		} else {
 			$use_mysql=0;
 		}
-		if (isset($_POST['use_composer'])){
-			$use_composer=1;
-		} else {
-			$use_composer=0;
-		}         
-		if (isset($_POST['use_npm'])){
-			$use_npm=1;
-		} else {
-			$use_npm=0;} 
-		
+				
 	$res2 = "INSERT INTO user (email_user)" .  
 		"VALUES('{$email_user}')"; 
 		mysql_query($res2);
 		
-	$res =  "INSERT INTO project (name, `group`, curator_id, title, description, git, subdomain, use_mysql, use_composer,use_npm, approve_code,reject_code)" .  
-	"VALUES('{$name}', '{$group}' , '{$curator}' , '{$title}' , '{$description}' , '{$git}','{$subdomain}','{$use_mysql}','{$use_composer}','{$use_npm}','{$approve_code}','{$reject_code}')"; 
+	$res =  "INSERT INTO project (name, `group`, curator, title, description, git, subdomain, use_mysql, approve_code,reject_code)" .  
+	"VALUES('{$name}', '{$group}' , '{$curator}' , '{$title}' , '{$description}' , '{$git}','{$subdomain}','{$use_mysql}','{$approve_code}','{$reject_code}')"; 
 
     mysql_query($res);
     echo mysql_error();
@@ -52,10 +43,10 @@
    
 				} ;
 	
-	$url  = "http://localhost/test/activate.php?approve_code=$approve_code";
-	$url2 = "http://localhost/test/deactivate.php?reject_code=$reject_code";	
+	$url  = "http://localhost:8081/test/activate.php?approve_code=$approve_code";
+	$url2 = "http://localhost:8081/test/deactivate.php?reject_code=$reject_code";	
 
-	$email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.curator_id=$curator");
+	$email_curator=mysql_query("SELECT curator.email_curator FROM curator where curator.id=$curator");
 	while ($result = mysql_fetch_array($email_curator)) 
 	//var_dump($result['email_curator']);
 
@@ -178,17 +169,14 @@
                                                     	<td valign="top" width="600" class="flexibleContainerCell">
 
 
-                                                            <table align="Left" border="0" cellpadding="0" cellspacing="0" width="260" class="flexibleContainer">
+                                                            <table align="Left" border="0" cellpadding="0" cellspacing="0" width="420" class="flexibleContainer">
                                                                 <tr>
                                                                     <td valign="top" class="textContent">
                                                                         <h3>Для подтверждения пройдите по ссылке:</h3>
                                                                         <br />'.$url.
 												                    '</td>
                                                                 </tr>
-                                                            </table>
-                                                     
-                                                            <table align="Right" border="0" cellpadding="0" cellspacing="0" width="260" class="flexibleContainer">
-                                                                <tr>
+																  <tr>
                                                                     <td valign="top" class="textContentLast">
                                                                         <h3>Для отказа пройтиде по ссылке:
 																		</h3>
@@ -197,6 +185,8 @@
                                                                    ' </td>
                                                                 </tr>
                                                             </table>
+                                                     
+                                                          
                                                          
                                                         </td>
                                                     </tr>
