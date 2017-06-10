@@ -10,7 +10,6 @@ if ($mysqli->connect_errno) {
 }
 $sql = "SELECT * FROM records";
 if (!$result = $mysqli->query($sql)) {
-3
  echo "Ошибка: Наш запрос не удался и вот почему: \n";
  echo "Запрос: " . $sql . "\n";
  echo "Номер_ошибки: " . $mysqli->errno . "\n";
