@@ -17,8 +17,8 @@
 	$description = ($_REQUEST['description']);
 	$git =  ($_REQUEST['git']);
 	$subdomain = ($_REQUEST['subdomain']);
-	$approve_code = md5('a'.$_REQUEST['id'].time());
-	$reject_code = md5($_REQUEST['id'].time());
+	$approve_code = md5('a'.$_REQUEST['git'].time());
+	$reject_code = md5($_REQUEST['git'].time());
 
 	if (isset($_POST['use_mysql'])){
 		$use_mysql=1;
