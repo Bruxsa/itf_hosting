@@ -41,7 +41,7 @@
  	
 
 	$email_curator = $mysqli->query("SELECT email_curator FROM curator WHERE id=$curator")->fetch_object()->email_curator; 
-	print $email_curator; 
+	
 
 	{
 		$subject = "Заявка на публикацию проекта";   
