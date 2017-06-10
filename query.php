@@ -43,7 +43,7 @@
 	$email_curator = $mysqli->query("SELECT email_curator FROM curator WHERE id=$curator")->fetch_object()->email_curator; 
 	print $email_curator; 
 	
-	{	include 'Send_Mail.php';
+	{	include 'smtp/Send_Mail.php';
 		$subject = "Заявка на публикацию проекта";   
 		$to = $email_curator;	
 		$message = '<html xmlns="http://www.w3.org/1999/xhtml">
