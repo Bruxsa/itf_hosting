@@ -17,8 +17,8 @@
 	$description = ($_REQUEST['description']);
 	$git =  ($_REQUEST['git']);
 	$subdomain = ($_REQUEST['subdomain']);
-	$approve_code = md5('a'.$_REQUEST['git'].time());
-	$reject_code = md5($_REQUEST['git'].time());
+	$approve_code = md5('a'.$_REQUEST['id'].time());
+	$reject_code = md5($_REQUEST['id'].time());
 
 	if (isset($_POST['use_mysql'])){
 		$use_mysql=1;
@@ -36,14 +36,14 @@
 		echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
    	} ;
 
-	$url  = "http://p41.itstudent.nsuem.ru/activate.php?approve_code=$approve_code";
-	$url2 = "http://p41.itstudent.nsuem.ru/deactivate.php?reject_code=$reject_code";	
+	$url  = "http://localhost:8081/testthree/activate.php?approve_code=$approve_code";
+	$url2 = "http://localhost:8081/testthree/deactivate.php?reject_code=$reject_code";	
  	
 
 	$email_curator = $mysqli->query("SELECT email_curator FROM curator WHERE id=$curator")->fetch_object()->email_curator; 
 	print $email_curator; 
-
-	{
+	
+	{	include 'Send_Mail.php';
 		$subject = "Заявка на публикацию проекта";   
 		$to = $email_curator;	
 		$message = '<html xmlns="http://www.w3.org/1999/xhtml">
