@@ -16,7 +16,7 @@ $reject_code=$mysqli->query("SELECT project.reject_code FROM project")->fetch_as
 	} //если не указали reject_code,    то выдаем ошибку
 	if ($reject_code == $reject_code) {//сравниваем полученный из url и сгенерированный код 
 		$mysqli->query("UPDATE    project SET status_progect='2' WHERE status_progect=0 and reject_code='$reject_code'");//если равны, то активируем пользователя
-        print "Проект не одобрен";
+        print "Проект не одобрен <a    href='request.php'>Подача заявки</a>";
     }else {
 		print 'Ошибка: ('. $mysqli->errno .') '. $mysqli->error ; //если    же полученный из url и    сгенерированный код не равны, то выдаем ошибку
     }
