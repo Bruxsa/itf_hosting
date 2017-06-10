@@ -36,8 +36,8 @@
 		echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
    	} ;
 
-	$url  = "http://localhost:8081/testthree/activate.php?approve_code=$approve_code";
-	$url2 = "http://localhost:8081/testthree/deactivate.php?reject_code=$reject_code";	
+	$url  = "http://p41.itstudent.nsuem.ru/activate.php?approve_code=$approve_code";
+	$url2 = "http://p41.itstudent.nsuem.ru/deactivate.php?reject_code=$reject_code";	
  	
 
 	$email_curator = $mysqli->query("SELECT email_curator FROM curator WHERE id=$curator")->fetch_object()->email_curator; 
