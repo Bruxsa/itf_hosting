@@ -9,14 +9,14 @@
  
 	// mysql_query выполняет запрос к БД, написанный на языке SQL.
 	$mysqli->set_charset('utf8');
-	$name = $mysqli->real_escape_string ($_REQUEST['name']);
-	$group = $mysqli->real_escape_string ($_REQUEST['group']);
-	$email_user = $mysqli->real_escape_string ($_REQUEST['email_user']);
+	$name = ($_REQUEST['name']);
+	$group =($_REQUEST['group']);
+	$email_user = ($_REQUEST['email_user']);
 	$curator = $_REQUEST['curator'];
-	$title = $mysqli->real_escape_string ($_REQUEST['title']);
-	$description = $mysqli->real_escape_string ($_REQUEST['description']);
-	$git = $mysqli->real_escape_string ($_REQUEST['git']);
-	$subdomain = $mysqli->real_escape_string ($_REQUEST['subdomain']);
+	$title =($_REQUEST['title']);
+	$description = ($_REQUEST['description']);
+	$git =  ($_REQUEST['git']);
+	$subdomain = ($_REQUEST['subdomain']);
 	$approve_code = md5('a'.$_REQUEST['id'].time());
 	$reject_code = md5($_REQUEST['id'].time());
 
@@ -36,8 +36,8 @@
 		echo "<script type=\"text/javascript\">alert( \"Возникла ошибка! Заявка не отправлена\");</script> \n";
    	} ;
 
-	$url  = "http://localhost:8081/test/activate.php?approve_code=$approve_code";
-	$url2 = "http://localhost:8081/test/deactivate.php?reject_code=$reject_code";	
+	$url  = "http://localhost:8081/testthree/activate.php?approve_code=$approve_code";
+	$url2 = "http://localhost:8081/testthree/deactivate.php?reject_code=$reject_code";	
  	
 
 	$email_curator = $mysqli->query("SELECT email_curator FROM curator WHERE id=$curator")->fetch_object()->email_curator; 

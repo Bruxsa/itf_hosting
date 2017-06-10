@@ -1,7 +1,7 @@
 ﻿<?php
 include "connection.php";
 
-$reject_code=$mysqli->query("SELECT project.reject_code FROM project");
+$reject_code=$mysqli->query("SELECT project.reject_code FROM project")->fetch_assoc()->reject_code;
 
 
 if(isset($_GET['reject_code'])) {

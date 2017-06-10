@@ -114,7 +114,7 @@
 								</div>
 						</div>
 					</fieldset>
-					<script type="text/javascript">
+					<script  charset="utf-8" type="text/javascript">
 							  var tooltipObj = new DHTMLgoodies_formTooltip();
 							  tooltipObj.setTooltipPosition('right');
 							  tooltipObj.setPageBgColor('#EEEEEE');
