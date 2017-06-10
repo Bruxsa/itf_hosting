@@ -222,7 +222,7 @@
 	$headers= "MIME-Version: 1.0\r\n";
 	$headers .= "Content-type: text/html; charset=UTF-8\r\n";
 	$subject = "=?utf-8B?B?" .base64_encode($subject)."?=";
-	mail ($to, $subject, $message, $headers);
+	Send_Mail ($to, $subject, $message, $headers);
 
 	}
 	
